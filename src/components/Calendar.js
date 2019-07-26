@@ -130,14 +130,9 @@ class CalendarTable extends React.Component {
   };
 
   render() {
-    console.log(
-      "init",
-      this.month,
-      this.props.month,
-      this.months[this.props.month]
-    );
+    console.log("init", this.props);
     const headers = this.days.map(this.renderHeaders);
-    const weeks = this.month.map(this.renderWeeks);
+    const weeks = this.props.calendar.map(this.renderWeeks);
 
     return (
       <div className="calendarContainer">
@@ -175,8 +170,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction()),
-  addMonth: payload => dispatch(addMonth(payload)),
   changeMonth: payload => dispatch(changeMonth(payload))
 });
 
