@@ -1,0 +1,87 @@
+.calendarContainer {
+  width: 60%;
+  height: 85px;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+.weekBox {
+  height: 100%;
+  width: 100%;
+  border: 0.5px solid #ccc;
+  background-color: #fafafa;
+}
+
+.headerBox {
+  height: 60% !important;
+}
+.dayBox {
+  display: inline-block;
+  text-align: left;
+  height: 100%;
+  width: 14.02%;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: gray;
+  font-weight: bold;
+}
+
+.dayWeek {
+  background-color: #3f71c2;
+  border-color: #3f71c2;
+  position: relative;
+  color: white;
+  font-weight: bold;
+}
+
+.dayWeekend {
+  background-color: gainsboro;
+}
+
+.dayBox.dayWeekend.dayMonth {
+  color: dodgerblue;
+}
+
+.dayMonth {
+  color: black;
+}
+
+.centeredDay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.reminders {
+  width: 100%;
+  height: 10.5px;
+  font-size: 10px;
+  position: relative;
+  float: right;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.day {
+  position: relative;
+  float: left;
+}
+
+.moreReminders {
+  color: white;
+  position: relative;
+  float: right;
+  margin-right: 5px;
+  padding: 2px;
+  margin-top: 3px;
+  font-size: 10px;
+  background: #3f71c2;
+  border-radius: 50%;
+}
+
+.row {
+  display: flex;
+}
