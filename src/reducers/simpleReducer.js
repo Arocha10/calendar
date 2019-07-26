@@ -7,8 +7,13 @@ const initialState = {
 export default function simpleReducer(state = initialState, action) {
   switch (action.type) {
     case "ADD_MONTH_ACTION":
-      let newState = { calendars: {} };
-      newState.calendars[action.payload.month] = action.payload.calendar;
+      let newCalendars = {};
+      newCalendars[action.payload.month] = action.payload.calendar;
+      console.log("newCalendars", action.payload.month, newCalendars);
+      let newState = { calendars: { ...state.calendars, ...newCalendars } };
+      console.log("final state", newState);
+      console.log("state", { ...state, ...newState });
+
       return { ...state, ...newState };
     case "SIMPLE_ACTION":
       return { ...state, ...{ message: action.payload } };

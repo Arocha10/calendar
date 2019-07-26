@@ -35,9 +35,11 @@ class App extends Component {
     });
   };
 
-  initWithMonth(m) {
+  initWithMonth(payload) {
+    console.log(" empeiza el bochinche", payload);
+    this.props.changeMonth(payload);
     const year = parseInt(moment().format("YYYY"), 10);
-    this.month = m.value;
+    this.month = payload.month;
     this.date = moment()
       .year(year)
       .month(this.month);
@@ -52,6 +54,7 @@ class App extends Component {
       .week();
 
     for (let week = startWeek; week < endWeek + 1; week++) {
+      console.log(week, "week");
       this.calendar[week] = Array(7)
         .fill(0)
         .map((n, i) =>
@@ -63,6 +66,11 @@ class App extends Component {
         );
     }
     this.calendar = this.calendar.filter(el => el != null);
+    console.log("new calendar", this.calendar);
+    this.props.addMonth({
+      month: payload.month,
+      calendar: this.calendar
+    });
   }
 
   getDaysInMonth = () => {
@@ -94,11 +102,6 @@ class App extends Component {
     this.props.simpleAction();
   };
 
-  changeMonth = (event, month) => {
-    console.log("entre", month);
-    this.props.changeMonth(month);
-  };
-
   render() {
     //  const days = ["Sunday","Monday", "Tuesday", "wednesday", "Thursday", "Friday", "Saturday" ];
     //  const headers = days.map(this.renderHeaders);
@@ -108,7 +111,7 @@ class App extends Component {
     return (
       <div className="App">
         <button onClick={this.simpleAction}>Test redux action</button>
-        <pre>{JSON.stringify(this.props)}</pre>
+        <pre>{JSON.stringify(this.props.simpleReducer.month)}</pre>
         <button className="open-modal-btn" onClick={this.openModalHandler}>
           Open Modal
         </button>
@@ -123,15 +126,21 @@ class App extends Component {
           plane sight?
         </Modal>
 
-        {this.props.simpleReducer.month && (
-          <Calendar
-            openModal={this.props.openModalHandler}
-            month={this.props.simpleReducer.month}
-            calendar={
-              this.props.simpleReducer.calendars[this.props.simpleReducer.month]
-            }
-          />
-        )}
+        {this.props.simpleReducer.month &&
+          this.props.simpleReducer.calendars.hasOwnProperty(
+            this.props.simpleReducer.month
+          ) && (
+            <Calendar
+              openModal={this.props.openModalHandler}
+              month={this.props.simpleReducer.month}
+              calendar={
+                this.props.simpleReducer.calendars[
+                  this.props.simpleReducer.month
+                ]
+              }
+              setMonth={item => this.initWithMonth(item)}
+            />
+          )}
       </div>
     );
   }

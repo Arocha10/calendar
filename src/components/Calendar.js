@@ -36,13 +36,6 @@ class CalendarTable extends React.Component {
     this.month = this.getDaysInMonth();
   }
 
-  componentDidMount() {
-    console.log(this.month);
-    let d = this.month[1][0];
-    console.log("month", d.month());
-    this.props.changeMonth({ month: d.month() });
-  }
-
   initWithMonth(m) {
     const year = parseInt(moment().format("YYYY"), 10);
     this.month = m.value;
@@ -129,6 +122,17 @@ class CalendarTable extends React.Component {
     );
   };
 
+  setMonth = month => {
+    console.log("entre", month);
+    let payload;
+    if (month < 0) {
+      payload = { month: this.props.month - 1 };
+    } else {
+      payload = { month: this.props.month + 1 };
+    }
+    this.props.setMonth(payload);
+  };
+
   render() {
     console.log("init", this.props);
     const headers = this.days.map(this.renderHeaders);
@@ -140,18 +144,14 @@ class CalendarTable extends React.Component {
         {this.props.month && (
           <div>
             <button
-              onClick={() =>
-                this.props.changeMonth({ month: this.props.month - 1 })
-              }
+              onClick={() => this.setMonth(-1)}
               className="open-modal-btn"
             >
               {" << Change Month"}
             </button>
             <h4>{this.months[this.props.month].text}</h4>
             <button
-              onClick={() =>
-                this.props.changeMonth({ month: this.props.month + 1 })
-              }
+              onClick={() => this.setMonth(+1)}
               className="open-modal-btn"
             >
               {"  Change Month >>"}
