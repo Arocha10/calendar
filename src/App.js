@@ -93,7 +93,13 @@ class App extends Component {
 
   onTimeChange(time) {
     console.log("Time", time);
-    //this.setState({time});
+    let state = {
+      ...this.state,
+      ...{
+        isShowing: false
+      }
+    };
+    this.setState(state);
   }
 
   handleClick = () => {
@@ -201,7 +207,7 @@ class App extends Component {
     return (
       <div className="App">
         <button onClick={this.simpleAction}>Test redux action</button>
-        <pre>{JSON.stringify(this.props.simpleReducer.day)}</pre>
+        <pre>{JSON.stringify(this.props.simpleReducer.reminders)}</pre>
         <button className="open-modal-btn" onClick={this.openModalHandler}>
           Open Modal
         </button>
@@ -215,7 +221,7 @@ class App extends Component {
           <p>
             {"This are your reminders for " +
               this.getMonth(this.props.simpleReducer.month) +
-              ", 1"}
+              ", " + this.props.simpleReducer.day}
           </p>
           <button onClick={this.showFormModal} class="button">
             Add reminder

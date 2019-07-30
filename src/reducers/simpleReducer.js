@@ -25,7 +25,11 @@ export default function simpleReducer(state = initialState, action) {
     case "SIMPLE_ACTION":
       return { ...state, ...action.payload };
     case "SET_DAY_ACTION":
-      return { ...state, ...{ day: action.payload } };
+      newState = {...state};
+        if(!state.reminders[state.month][action.payload]){
+          newState.reminders[state.month][action.payload] = {}
+        }
+      return { ...newState, ...{ day: action.payload,  } };
     case "ADD_REMINDER_ACTION":
       newState = { ...state };
       console.log("have reminders", newState.reminders[action.payload.month]);
