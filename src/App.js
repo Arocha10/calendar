@@ -11,6 +11,7 @@ import {
   changeMonth,
   addReminders
 } from "./actions/simpleAction";
+import TimeField from "react-simple-timefield";
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class App extends Component {
 
     this.state = {
       isShowing: false,
-      showForm: false
+      showForm: false,
+      time: "12:34"
     };
     this.months = [
       { value: 0, text: "January" },
@@ -85,6 +87,11 @@ class App extends Component {
     };
     this.setState(state);
   };
+
+  onTimeChange(time) {
+    console.log("Time", time);
+    //this.setState({time});
+  }
 
   initWithMonth(payload) {
     console.log(" empeiza el bochinche", payload);
@@ -196,13 +203,30 @@ class App extends Component {
               </label>
               <br />
               <label>
-                Number of guests:
+                Info of remminder:
                 <input
                   name="numberOfGuests"
                   type="number"
                   className="inputModel"
                   value={this.state.numberOfGuests}
                   onChange={this.handleInputChange}
+                />
+              </label>
+              <label>
+                Time of the reminder:
+                <TimeField
+                  value={this.state.time}
+                  onChange={this.onTimeChange}
+                  style={{
+                    border: "2px solid #666",
+                    fontSize: 24,
+                    width: 70,
+                    color: "#333",
+                    marginLeft: "25%",
+                    display: "block",
+                    alignSelf: "center",
+                    borderRadius: 3
+                  }}
                 />
               </label>
             </form>
