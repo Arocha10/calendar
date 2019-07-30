@@ -1,6 +1,11 @@
 import * as React from "react";
 import moment from "moment";
-import { simpleAction, addMonth, changeMonth } from "../actions/simpleAction";
+import {
+  simpleAction,
+  addMonth,
+  changeMonth,
+  setDay
+} from "../actions/simpleAction";
 import "../styles/calendar.css";
 import { connect } from "react-redux";
 
@@ -102,6 +107,11 @@ class CalendarTable extends React.Component {
     );
   };
 
+  openDayModal = day => {
+    this.props.setDay(day);
+    this.props.openModal();
+  };
+
   renderWeeks = week => {
     console.log(week);
     return (
@@ -110,7 +120,7 @@ class CalendarTable extends React.Component {
           console.log("dy", dy, dy.get("date"));
           return (
             <div
-              onClick={() => this.props.openModal()}
+              onClick={() => this.openDayModal(dy.get("date"))}
               key={`${index}-monthDay-${dy.get("date")}`}
               className="dayBox dayMonth"
             >
@@ -170,7 +180,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeMonth: payload => dispatch(changeMonth(payload))
+  changeMonth: payload => dispatch(changeMonth(payload)),
+  setDay: payload => dispatch(setDay(payload))
 });
 
 export default connect(

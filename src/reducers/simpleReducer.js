@@ -1,22 +1,41 @@
 const initialState = {
   calendars: {},
+  reminders: {},
   month: "",
-  algo: "",
+  day: "",
   message: ""
 };
 export default function simpleReducer(state = initialState, action) {
+  let newState;
   switch (action.type) {
     case "ADD_MONTH_ACTION":
       let newCalendars = {};
+      let newReminders = {};
       newCalendars[action.payload.month] = action.payload.calendar;
+      newReminders[action.payload.month] = {};
       console.log("newCalendars", action.payload.month, newCalendars);
-      let newState = { calendars: { ...state.calendars, ...newCalendars } };
+      newState = {
+        calendars: { ...state.calendars, ...newCalendars },
+        reminders: { ...state.reminders, ...newReminders }
+      };
       console.log("final state", newState);
       console.log("state", { ...state, ...newState });
 
       return { ...state, ...newState };
     case "SIMPLE_ACTION":
-      return { ...state, ...{ message: action.payload } };
+      return { ...state, ...action.payload };
+    case "SET_DAY_ACTION":
+      return { ...state, ...{ day: action.payload } };
+    case "ADD_REMINDER_ACTION":
+      newState = { ...state };
+      console.log("have reminders", newState.reminders[action.payload.month]);
+      newState.reminders[action.payload.month][action.payload.day]
+        ? newState.reminders[action.payload.month][action.payload.day].push(
+            action.payload.reminder
+          )
+        : (newState.reminders[action.payload.month][action.payload.day] = [
+            action.payload.reminder
+          ]);
     case "CHANGE_MONTH_ACTION":
       return { ...state, ...{ month: action.payload.month } };
     default:
