@@ -12,6 +12,7 @@ import {
   addReminders
 } from "./actions/simpleAction";
 import TimeField from "react-simple-timefield";
+import { SketchPicker } from "react-color";
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +21,9 @@ class App extends Component {
     this.state = {
       isShowing: false,
       showForm: false,
-      time: "12:34"
+      time: "12:34",
+      background: "#fff",
+      displayColorPicker: false
     };
     this.months = [
       { value: 0, text: "January" },
@@ -92,6 +95,22 @@ class App extends Component {
     console.log("Time", time);
     //this.setState({time});
   }
+
+  handleClick = () => {
+    this.setState({
+      ...this.state,
+      ...{ displayColorPicker: !this.state.displayColorPicker }
+    });
+  };
+
+  handleClose = () => {
+    this.setState({ ...this.state, ...{ displayColorPicker: false } });
+  };
+
+  handleChangeComplete = color => {
+    console.log("color", color, color.hex);
+    //this.setState({ background: color.hex });
+  };
 
   initWithMonth(payload) {
     console.log(" empeiza el bochinche", payload);
@@ -167,6 +186,18 @@ class App extends Component {
     //  const weeks = month.map(this.renderWeeks);
     //  console.log(month);
 
+    const popover = {
+      position: "absolute",
+      zIndex: "2"
+    };
+    const cover = {
+      position: "fixed",
+      top: "0px",
+      right: "0px",
+      bottom: "0px",
+      left: "0px"
+    };
+
     return (
       <div className="App">
         <button onClick={this.simpleAction}>Test redux action</button>
@@ -227,6 +258,13 @@ class App extends Component {
                     alignSelf: "center",
                     borderRadius: 3
                   }}
+                />
+              </label>
+              <label>
+                Color for the reminder:
+                <SketchPicker
+                  color={this.state.background}
+                  onChangeComplete={this.handleChangeComplete}
                 />
               </label>
             </form>
