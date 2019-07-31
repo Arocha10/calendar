@@ -21,6 +21,7 @@ class App extends Component {
     this.state = {
       isShowing: false,
       showForm: false,
+      descriptionReminder: "",
       time: "12:34",
       background: "#fff",
       displayColorPicker: false
@@ -91,12 +92,12 @@ class App extends Component {
     this.setState(state);
   };
 
-  onTimeChange(time) {
+  onTimeChange = (time) =>{
     console.log("Time", time);
     let state = {
       ...this.state,
       ...{
-        isShowing: false
+        time: time
       }
     };
     this.setState(state);
@@ -115,7 +116,24 @@ class App extends Component {
 
   handleChangeComplete = color => {
     console.log("color", color, color.hex);
-    //this.setState({ background: color.hex });
+    let state = {
+      ...this.state,
+      ...{
+        background: color.hex
+      }
+    };
+    this.setState(state);
+  };
+
+  handleInputChange = description => {
+    console.log("reminder desc", description);
+    let state = {
+      ...this.state,
+      ...{
+        descriptionReminder: description
+      }
+    };
+    this.setState(state);
   };
 
   initWithMonth(payload) {
@@ -208,6 +226,10 @@ class App extends Component {
       <div className="App">
         <button onClick={this.simpleAction}>Test redux action</button>
         <pre>{JSON.stringify(this.props.simpleReducer.reminders)}</pre>
+        <pre>{JSON.stringify(this.state.descriptionReminder)}</pre>
+        <pre>{JSON.stringify(this.state.time)}</pre>
+        <pre>{JSON.stringify(this.state.background)}</pre>
+
         <button className="open-modal-btn" onClick={this.openModalHandler}>
           Open Modal
         </button>
@@ -229,24 +251,15 @@ class App extends Component {
 
           {this.state.showForm ? (
             <form>
-              <label>
-                Is going:
-                <input
-                  name="isGoing"
-                  type="checkbox"
-                  checked={this.state.isGoing}
-                  onChange={this.handleInputChange}
-                />
-              </label>
               <br />
               <label>
                 Info of remminder:
                 <input
-                  name="numberOfGuests"
-                  type="number"
+                  name="description"
+                  type="text"
                   className="inputModel"
-                  value={this.state.numberOfGuests}
-                  onChange={this.handleInputChange}
+                  value={this.state.descriptionReminder}
+                  onChange={e => this.handleInputChange(e.target.value)}
                 />
               </label>
               <label>
