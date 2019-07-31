@@ -92,7 +92,7 @@ class App extends Component {
     this.setState(state);
   };
 
-  onTimeChange = (time) =>{
+  onTimeChange = time => {
     console.log("Time", time);
     let state = {
       ...this.state,
@@ -101,7 +101,7 @@ class App extends Component {
       }
     };
     this.setState(state);
-  }
+  };
 
   handleClick = () => {
     this.setState({
@@ -134,6 +134,27 @@ class App extends Component {
       }
     };
     this.setState(state);
+  };
+
+  renderReminders = week => {
+    const { reminders } = this.props.simpleReducer;
+    console.log(week);
+    return (
+      <div className="weekBox ">
+        {week.map((dy, index) => {
+          console.log("dy", dy, dy.get("date"));
+          return (
+            <div
+              onClick={() => this.openDayModal(dy.get("date"))}
+              key={`${index}-monthDay-${dy.get("date")}`}
+              className="dayBox dayMonth"
+            >
+              <div className="day">{dy.get("date")}</div>
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   initWithMonth(payload) {
@@ -204,35 +225,8 @@ class App extends Component {
   };
 
   render() {
-    //  const days = ["Sunday","Monday", "Tuesday", "wednesday", "Thursday", "Friday", "Saturday" ];
-    //  const headers = days.map(this.renderHeaders);
-    //  const month = this.getDaysInMonth(3,2019);
-    //  const weeks = month.map(this.renderWeeks);
-    //  console.log(month);
-
-    const popover = {
-      position: "absolute",
-      zIndex: "2"
-    };
-    const cover = {
-      position: "fixed",
-      top: "0px",
-      right: "0px",
-      bottom: "0px",
-      left: "0px"
-    };
-
     return (
       <div className="App">
-        <button onClick={this.simpleAction}>Test redux action</button>
-        <pre>{JSON.stringify(this.props.simpleReducer.reminders)}</pre>
-        <pre>{JSON.stringify(this.state.descriptionReminder)}</pre>
-        <pre>{JSON.stringify(this.state.time)}</pre>
-        <pre>{JSON.stringify(this.state.background)}</pre>
-
-        <button className="open-modal-btn" onClick={this.openModalHandler}>
-          Open Modal
-        </button>
         <h4>{this.props.month}</h4>
 
         <Modal
@@ -243,7 +237,8 @@ class App extends Component {
           <p>
             {"This are your reminders for " +
               this.getMonth(this.props.simpleReducer.month) +
-              ", " + this.props.simpleReducer.day}
+              ", " +
+              this.props.simpleReducer.day}
           </p>
           <button onClick={this.showFormModal} class="button">
             Add reminder
