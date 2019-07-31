@@ -47,7 +47,6 @@ class CalendarTable extends React.Component {
     this.date = moment()
       .year(year)
       .month(this.month);
-    console.log(this.date);
     this.calendar = [];
 
     const startWeek = moment(this.date)
@@ -80,7 +79,6 @@ class CalendarTable extends React.Component {
     const endWeek = moment()
       .endOf("month")
       .week();
-    console.log(startWeek, "startWeek", endWeek, "endWeek");
     for (let week = startWeek; week < endWeek + 1; week++) {
       calendar[week] = Array(7)
         .fill(0)
@@ -98,13 +96,7 @@ class CalendarTable extends React.Component {
   };
 
   renderHeaders = day => {
-    return (
-      <div key={`heading-${day}`} className="dayBox dayWeek">
-        <div className="centeredDay">
-          <div className="dayWeek">{day}</div>
-        </div>
-      </div>
-    );
+    return <div className="dayWeek">{day}</div>;
   };
 
   openDayModal = day => {
@@ -113,11 +105,9 @@ class CalendarTable extends React.Component {
   };
 
   renderWeeks = week => {
-    console.log(week);
     return (
-      <div className="weekBox ">
+      <div className="container ">
         {week.map((dy, index) => {
-          console.log("dy", dy, dy.get("date"));
           return (
             <div
               onClick={() => this.openDayModal(dy.get("date"))}
@@ -133,7 +123,6 @@ class CalendarTable extends React.Component {
   };
 
   setMonth = month => {
-    console.log("entre", month);
     let payload;
     if (month < 0) {
       payload = { month: this.props.month - 1 };
@@ -144,7 +133,6 @@ class CalendarTable extends React.Component {
   };
 
   render() {
-    console.log("init", this.props);
     const headers = this.days.map(this.renderHeaders);
     const weeks = this.props.calendar.map(this.renderWeeks);
 
@@ -169,7 +157,7 @@ class CalendarTable extends React.Component {
           </div>
         )}
 
-        <div className=" weekBox headerBox ">{headers}</div>
+        <div className="containerHeader ">{headers}</div>
         {weeks}
       </div>
     );

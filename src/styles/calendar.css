@@ -19,7 +19,7 @@
   display: inline-block;
   text-align: left;
   height: 100%;
-  width: 14.02%;
+  width: 100%;
   border: 1px solid #ccc;
   background-color: #ffffff;
   color: gray;
@@ -113,4 +113,14 @@
   margin-left: 25%;
   display: block;
   height: 25px;
+}
+.container {
+  display: grid;
+  grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;
+  grid-template-rows: 100px;
+}
+.containerHeader {
+  display: grid;
+  grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;
+  grid-template-rows: 50px;
 }
